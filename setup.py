@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'shikaku-test'
+package_name = 'shikaku_test'
 
 setup(
     name=package_name,

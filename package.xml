@@ -6,6 +6,9 @@
   <description>TODO: Package description</description>
   <maintainer email="faaizhaikal@gmail.com">faaiz</maintainer>
   <license>TODO: License declaration</license>
+  
+  <depend>rclpy</depend>
+  <depend>tachimawari_interfaces</depend>
 
   <exec_depend>joint_state_publisher</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>

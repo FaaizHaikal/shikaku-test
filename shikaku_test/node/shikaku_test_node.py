@@ -1,88 +1,64 @@
 import rclpy
+import tf2_ros
 from tachimawari_interfaces.msg import CurrentJoints
-# from kansei_interfaces.msg import Status
+from kansei_interfaces.msg import Status
 from sensor_msgs.msg import JointState
+from geometry_msgs.msg import TransformStamped
+
+from shikaku_test.utils.utils import joint_names, fixed_joints, joint_directions
 
 class ShikakuTestNode:
   def __init__(self, node):
     self.node = node
-    
-    self.joint_names = {
-      1: "right_shoulder_pitch",
-      2: "left_shoulder_pitch",
-      3: "right_shoulder_roll",
-      4: "left_shoulder_roll",
-      5: "right_elbow",
-      6: "left_elbow",
-      7: "right_hip_yaw",
-      8: "left_hip_yaw",
-      9: "right_hip_roll",
-      10: "left_hip_roll",
-      11: "right_hip_pitch",
-      12: "left_hip_pitch",
-      13: "right_knee",
-      14: "left_knee",
-      15: "right_ankle_pitch",
-      16: "left_ankle_pitch",
-      17: "right_ankle_roll",
-      18: "left_ankle_roll",
-      19: "neck_yaw",
-      20: "neck_pitch"
-    }
-    
-    self.fixed_joints = [
-      "odom_joint",
-      "camera_joint",
-      "left_foot_joint",
-      "right_foot_joint",
-    ]
-    
-    self.joint_directions = {
-      1: 1,
-      2: 1,
-      3: -1,
-      4: -1,
-      5: 1,
-      6: 1,
-      7: 1,
-      8: 1,
-      9: 1,
-      10: 1,
-      11: 1,
-      12: 1,
-      13: 1,
-      14: 1,
-      15: 1,
-      16: 1,
-      17: 1,
-      18: 1,
-      19: 1,
-      20: 1
-    }
+    self.joints_msg = None
+    self.tf_msg = None
 
     self.current_joints_subscription = self.node.create_subscription(
       CurrentJoints, "joint/current_joints", 
-      lambda msg: [self.publish_joint_state(msg.joints)], 10)
+      lambda msg: [self.update(msg.joints)], 10)
+    
+    # self.kansei_status_subscription = self.node.create_subscription(
+    #   Status, "measurement/status",
+    #   lambda msg: [self.update_imu_tf(msg.orientation)], 10)
     
     self.joint_state_publisher = self.node.create_publisher(JointState, "joint_states", 10)
     
+    # self.tf_buffer = tf2_ros.Buffer()
+    # self.tf_broadcaster = tf2_ros.TransformBroadcaster(self.node, self.tf_buffer)
+    
+    self.node_timer = self.node.create_timer(0.008, self.update)
+    
   def angle_to_radian(self, angle):
     return angle * 3.14159 / 180
-
-  def publish_joint_state(self, joints):
-    print(joints)
-
-    msg = JointState()
+  
+  def update_joints(self, joints):
+    self.joints_msg = JointState()
     for joint in joints:
-      msg.name.append(self.joint_names[joint.id])
-      msg.position.append(self.angle_to_radian(joint.position) * self.joint_directions[joint.id])
+      self.joints_msg.name.append(joint_names[joint.id])
+      self.joints_msg.position.append(self.angle_to_radian(joint.angle) * joint_directions[joint.id])
     
-    # add fixed joints
-    for joint in self.fixed_joints:
-      msg.name.append(joint)
-      msg.position.append(0)
-      
-    msg.header.stamp = self.node.get_clock().now().to_msg()
+    for joint in fixed_joints:
+      self.joints_msg.name.append(joint)
+      self.joints_msg.position.append(0)
+
+    self.joints_msg.header.stamp = self.node.get_clock().now().to_msg()
+  
+  def update_imu_tf(self, imu_data):
+    # t = TransformStamped()
+    # t.header.stamp = self.node.get_clock().now().to_msg()
+    # t.header.frame_id = "odom"
+    # t.child_frame_id = "body"
+    # t.transform.translation.x = 0
+    # t.transform.translation.y = 0
+    # t.transform.translation.z = 0
+    # t.transform.rotation.x = imu_data.pitch
+    # t.transform.rotation.y = imu_data.roll
+    # t.transform.rotation.z = imu_data.yaw
+    # t.transform.rotation.w = 0.0  # Assuming w is 0 if not provided
     
-    self.joint_state_publisher.publish(msg)
+    # self.tf_msg = [t]
+    return
     
+  def update(self):
+    self.joint_state_publisher.publish(self.joints_msg)
+    # self.tf_broadcaster.sendTransform(self.tf_msg)

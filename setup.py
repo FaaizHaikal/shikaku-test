@@ -10,6 +10,7 @@ setup(
     packages=find_packages(exclude=['test']),
     py_modules=[
         'shikaku_test/node/shikaku_test_node',
+        'shikaku_test/utils/utils'
     ],
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),

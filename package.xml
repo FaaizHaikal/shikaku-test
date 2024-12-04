@@ -8,6 +8,7 @@
   <license>TODO: License declaration</license>
   
   <depend>rclpy</depend>
+  <depend>geometry_msgs</depend>
   <depend>tachimawari_interfaces</depend>
   <depend>gyakuenki_interfaces</depend>
 

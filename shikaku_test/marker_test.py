@@ -13,8 +13,9 @@ class MarkerPublisher(Node):
     def publish_marker(self, msg: ProjectedObjects):
         for obj in msg.projected_objects:
             if obj.label == "ball":
+                self.get_logger().info("Ball detected!")
                 marker = Marker()
-                marker.header.frame_id = "camera"
+                marker.header.frame_id = "base_footprint"
                 marker.header.stamp = self.get_clock().now().to_msg()
                 marker.ns = "test_marker"
                 marker.id = 0
@@ -22,9 +23,9 @@ class MarkerPublisher(Node):
                 marker.action = Marker.ADD
 
                 # Position the marker in front of the camera
-                marker.pose.position.x = msg.center.x  # Distance in the X-direction (e.g., 0.5 meters)
-                marker.pose.position.y = msg.center.y  # Centered in Y
-                marker.pose.position.z = msg.center.z  # Height (e.g., 1.0 meters above ground)
+                marker.pose.position.x = obj.center.x  # Distance in the X-direction (e.g., 0.5 meters)
+                marker.pose.position.y = obj.center.y  # Centered in Y
+                marker.pose.position.z = obj.center.z  # Height (e.g., 1.0 meters above ground)
                 marker.pose.orientation.x = 0.0
                 marker.pose.orientation.y = 0.0
                 marker.pose.orientation.z = 0.0

@@ -30,7 +30,8 @@ setup(
     entry_points={
         'console_scripts': [
             'main = shikaku_test.main:main',
-            'marker_test = shikaku_test.marker_test:main'
+            'marker_test = shikaku_test.marker_test:main',
+            'fov_test = shikaku_test.fov_test:main',
         ],
     },
 )

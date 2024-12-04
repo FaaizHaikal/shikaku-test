@@ -29,7 +29,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'main = shikaku_test.main:main'
+            'main = shikaku_test.main:main',
+            'marker_test = shikaku_test.marker_test:main'
         ],
     },
 )

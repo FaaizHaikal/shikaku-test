@@ -39,7 +39,7 @@ def generate_launch_description():
      
   declare_use_joint_state_publisher_cmd = DeclareLaunchArgument(
     name='gui',
-    default_value='False',
+    default_value='True',
     description='Flag to enable joint_state_publisher_gui')
    
   declare_use_robot_state_pub_cmd = DeclareLaunchArgument(
@@ -61,7 +61,7 @@ def generate_launch_description():
  
   # Publish the joint state values for the non-fixed joints in the URDF file.
   start_joint_state_publisher_cmd = Node(
-    condition=IfCondition(gui),
+    condition=UnlessCondition(gui),
     package='joint_state_publisher',
     executable='joint_state_publisher',
     name='joint_state_publisher')

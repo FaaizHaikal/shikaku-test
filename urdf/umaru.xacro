@@ -54,17 +54,11 @@
 
   <link name="base_link"/>
   <xacro:m_frame frame_name="odom"/>
-
-  <xacro:m_joint joint_name="odom_joint" parent="base_link" child="odom" xyz="0 0 0" rpy="0 0 0" lower="0" upper="0"/>
-
+  <xacro:m_joint_fixed joint_name="odom_joint" parent="base_link" child="odom" xyz="0 0 0" rpy="0 0 0"/>
 
   <!-- BODY -->
   <xacro:m_link link_name="body" xyz="${0*world_scale} ${0*world_scale} ${0*world_scale}" rpy="${pi/2} 0 0" mesh="Body" color="black"/>
-  <joint name="body_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="body"/>
-    <origin xyz="0 0 ${2.75*world_scale}" rpy="0 0 0"/>
-  </joint>
+  <xacro:m_joint joint_name="body_joint" parent="odom" child="body" xyz="0 0 ${2.75 * world_scale}" rpy="0 0 0" lower="0" upper="0"/>
 
   <!-- HEAD LINK -->
   <xacro:m_link link_name="neck" xyz="${0*world_scale} ${-0.092*world_scale} ${-0.065*world_scale}" rpy="${pi/2} ${pi/2} 0" mesh="Neck" color="light_gray"/>
@@ -116,11 +110,11 @@
                   xyz="${-0.0325*world_scale} ${0*world_scale} ${-0.775*world_scale}" rpy="0 0 ${pi/2}" lower="${-3/4*pi}" upper="${3/4*pi}"/>
 
   <!-- LEG JOINTS (ID 7 - 18) -->
-  <xacro:m_joint joint_name="right_hip_yaw" parent="body" child="right_groin" 
-                  xyz="${-0.238*world_scale} ${-0.2475*world_scale} ${-0.68*world_scale}" rpy="0 ${pi/-2} 0" lower="${pi/-4}" upper="${pi/2}"/>
+  <xacro:m_joint joint_name="right_hip_yaw" parent="body" child="right_groin"
+                  xyz="${-0.238*world_scale} ${-0.2475*world_scale} ${-0.68*world_scale}" rpy="0 ${pi/-2} 0" lower="${pi/-2}" upper="${pi/4}"/>
 
   <xacro:m_joint joint_name="left_hip_yaw" parent="body" child="left_groin" 
-                  xyz="${-0.238*world_scale} ${0.2475*world_scale} ${-0.68*world_scale}" rpy="0 ${pi/-2} 0" lower="${pi/-2}" upper="${pi/4}"/>
+                  xyz="${-0.238*world_scale} ${0.2475*world_scale} ${-0.68*world_scale}" rpy="0 ${pi/-2} 0" lower="${pi/-4}" upper="${pi/2}"/>
 
   <xacro:m_joint joint_name="right_hip_roll" parent="right_groin" child="right_buttock" 
                   xyz="${-0.185*world_scale} ${0*world_scale} ${0.135*world_scale}" rpy="0 ${pi/-2} 0" lower="${pi/-4}" upper="${pi/2}"/>

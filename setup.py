@@ -33,6 +33,7 @@ setup(
             'main = shikaku_test.main:main',
             'marker_test = shikaku_test.marker_test:main',
             'fov_test = shikaku_test.fov_test:main',
+            'projection_test = shikaku_test.projection_test:main',
         ],
     },
 )

@@ -57,8 +57,8 @@ class ProjectionTest(Node):
         cx = self.K[0, 2]
         cy = self.K[1, 2]
       
-        object_center_x = (detected_object.right - detected_object.left) / 2
-        object_center_y = (detected_object.bottom - detected_object.top) / 2
+        object_center_x = detected_object.left + detected_object.right / 2
+        object_center_y = detected_object.top + detected_object.bottom / 2
 
         x = (object_center_x - cx) / fx
         y = (object_center_y - cy) / fy
@@ -74,7 +74,7 @@ class ProjectionTest(Node):
         
         P_c = np.array([x * Z_c, y * Z_c, Z_c])
         
-        P_b = R @ P_c + T
+        P_b = np.dot(R, P_c) + T
         
         projected_object = ProjectedObject()
         projected_object.center.x = P_b[0]

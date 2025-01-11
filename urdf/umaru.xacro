@@ -156,7 +156,7 @@
   <!-- FRAMES -->
   <xacro:m_frame frame_name="camera"/>
   <xacro:m_joint joint_name="camera_joint" parent="head" child="camera"
-                        xyz="${0*world_scale} ${0.1*world_scale} ${0.2*world_scale}" rpy="${-1/2 * pi} ${pi} 0" lower="0" upper="0"/>
+                        xyz="${0*world_scale} ${0.1*world_scale} ${0.2*world_scale}" rpy="${-1/2 * pi} 0 0" lower="0" upper="0"/>
 
   <xacro:m_frame frame_name="right_foot_frame"/>
   <xacro:m_joint joint_name="right_foot_joint" parent="right_foot" child="right_foot_frame"

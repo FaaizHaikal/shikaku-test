@@ -18,6 +18,8 @@ setup(
         (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
         (os.path.join('share', package_name, 'meshes', 'teen_size'), glob('meshes/teen_size/*')),
         (os.path.join('share', package_name, 'meshes', 'kid_size'), glob('meshes/kid_size/*')),
+        (os.path.join('share', package_name, 'meshes', 'gankenkun'), glob('meshes/gankenkun/*')),
+        (os.path.join('share', package_name, 'meshes', 'double_crank'), glob('meshes/double_crank/*')),
         (os.path.join('share', package_name, 'urdf'), glob('urdf/*')),
         (os.path.join('share', package_name, 'rviz'), glob('rviz/*')),
     ],

@@ -126,7 +126,7 @@ Visualization Manager:
           Value: false
         lidar_link:
           Value: false
-      Marker Scale: 1
+      Marker Scale: 0.15
       Name: TF
       Show Arrows: false
       Show Axes: true

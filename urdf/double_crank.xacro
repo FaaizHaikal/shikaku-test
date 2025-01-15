@@ -108,6 +108,8 @@
   <xacro:m_link_leg link_name="right_knee" xyz="${-0.1*world_scale} ${-0.379*world_scale} ${0.0525*world_scale}" rpy="${pi/2} 0 ${pi/-2}" mesh="Knee" color="light_gray"/>
   <xacro:m_link_leg link_name="right_shin_front_crank" xyz="${0*world_scale} ${0.0525*world_scale} ${0.28*world_scale}" rpy="${pi/-2} 0 ${pi/-2}" mesh="Lower_Front_Crank" color="black"/>
   <xacro:m_link_leg link_name="right_shin_behind_crank" xyz="${0.165*world_scale}  ${-0.09*world_scale} ${0.235*world_scale}" rpy="${pi/-2} 0 ${pi/-2}" mesh="Lower_Behind_Crank" color="black"/>
+  <xacro:m_link_leg link_name="right_shin_to_ankle" xyz="${-0.1475*world_scale}  ${0*world_scale} ${0*world_scale}" rpy="${2*pi/3} 0 0" mesh="Shin_Link" color="light_gray"/>
+  <xacro:m_link_leg link_name="right_heel" xyz="${-0.235*world_scale} ${0.0275*world_scale} ${0.305*world_scale}" rpy="${pi/-2} 0 ${pi/-2}" mesh="Heel" color="black"/>
 
   <!-- <xacro:m_link link_name="right_groin" xyz="${-0.415*world_scale} ${-0.235*world_scale} ${-0.05*world_scale}" rpy="${pi/-2} ${pi/-2} 0" mesh="Groin" color="light_gray"/>
   <xacro:m_link link_name="right_buttock" xyz="${-0.18*world_scale} ${-0.235*world_scale} ${0.23*world_scale}" rpy="${pi/-2} 0 0" mesh="Buttock" color="light_gray"/>
@@ -124,6 +126,9 @@
   <xacro:m_link_leg link_name="left_knee" xyz="${0.1*world_scale} ${0.379*world_scale} ${0.0525*world_scale}" rpy="${pi/2} 0 ${pi/2}" mesh="Knee" color="light_gray"/>
   <xacro:m_link_leg link_name="left_shin_front_crank" xyz="${0*world_scale} ${-0.0525*world_scale} ${0.28*world_scale}" rpy="${pi/-2} 0 ${pi/2}" mesh="Lower_Front_Crank" color="black"/>
   <xacro:m_link_leg link_name="left_shin_behind_crank" xyz="${-0.165*world_scale}  ${0.09*world_scale} ${0.235*world_scale}" rpy="${pi/-2} 0 ${pi/2}" mesh="Lower_Behind_Crank" color="black"/>
+  <xacro:m_link_leg link_name="left_shin_to_ankle" xyz="${-0.1475*world_scale}  ${0*world_scale} ${0*world_scale}" rpy="${-2*pi/3} 0 0" mesh="Shin_Link" color="light_gray"/>
+  <xacro:m_link_leg link_name="left_heel" xyz="${0.235*world_scale} ${-0.0275*world_scale} ${0.305*world_scale}" rpy="${pi/-2} 0 ${pi/2}" mesh="Heel" color="black"/>
+
   <!-- <xacro:m_link link_name="left_groin" xyz="${-0.415*world_scale} ${-0.235*world_scale} ${-0.05*world_scale}" rpy="${pi/-2} ${pi/-2} 0" mesh="Groin" color="light_gray"/>
   <xacro:m_link link_name="left_buttock" xyz="${-0.18*world_scale} ${-0.235*world_scale} ${0.23*world_scale}" rpy="${pi/-2} 0 0" mesh="Buttock" color="light_gray"/>
   <xacro:m_link link_name="left_thigh" xyz="${0*world_scale} ${-0.04*world_scale} ${-0.175*world_scale}" rpy="${pi/-2} 0 ${pi}" mesh="Thigh" color="black"/>
@@ -191,6 +196,18 @@
   <xacro:m_joint_mimic joint_name="left_shin_pitch_mimic" parent="left_knee" child="left_shin_behind_crank"
                   xyz="${0*world_scale} ${0.1975*world_scale} ${0.195*world_scale}" rpy="0 0 0" lower="${pi/-2}" upper="${pi/6}"
                   mimic="left_shin_pitch" mult="1"/>
+
+  <xacro:m_joint_mimic joint_name="right_ankle_pitch_mimic" parent="right_shin_front_crank" child="right_shin_to_ankle"
+                  xyz="${0*world_scale} ${0*world_scale} ${0.535*world_scale}" rpy="0 0 0" lower="${pi/-6}" upper="${pi/2}"
+                  mimic="right_shin_pitch" mult="-1"/>
+  <xacro:m_joint_mimic joint_name="left_ankle_pitch_mimic" parent="left_shin_front_crank" child="left_shin_to_ankle"
+                  xyz="${0*world_scale} ${0*world_scale} ${0.535*world_scale}" rpy="0 0 0" lower="${pi/-2}" upper="${pi/6}"
+                  mimic="left_shin_pitch" mult="-1"/>
+
+  <xacro:m_joint joint_name="right_ankle_pitch" parent="right_shin_to_ankle" child="right_heel"
+                  xyz="${0*world_scale} ${0*world_scale} ${0*world_scale}" rpy="0 0 0" lower="${pi/-4}" upper="${pi/4}"/>
+  <xacro:m_joint joint_name="left_ankle_pitch" parent="left_shin_to_ankle" child="left_heel"
+                  xyz="${0*world_scale} ${0*world_scale} ${0*world_scale}" rpy="0 0 0" lower="${pi/-4}" upper="${pi/4}"/>
 
   <!-- <xacro:m_joint joint_name="right_hip_yaw" parent="body" child="right_groin"
                   xyz="${-0.238*world_scale} ${-0.2475*world_scale} ${-0.68*world_scale}" rpy="0 ${pi/-2} 0" lower="${pi/-2}" upper="${pi/4}"/>

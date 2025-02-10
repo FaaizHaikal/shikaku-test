@@ -11,14 +11,16 @@ joint_names = {
   10: "left_hip_roll",
   11: "right_hip_pitch",
   12: "left_hip_pitch",
-  13: "right_knee",
-  14: "left_knee",
+  13: "right_upper_knee",
+  14: "left_upper_knee",
   15: "right_ankle_pitch",
   16: "left_ankle_pitch",
   17: "right_ankle_roll",
   18: "left_ankle_roll",
   19: "neck_yaw",
-  20: "neck_pitch"
+  20: "neck_pitch",
+  21: "right_lower_knee",
+  22: "left_lower_knee"
 }
 
 fixed_joints = [
@@ -49,5 +51,7 @@ joint_directions = {
   17: 1,
   18: 1,
   19: 1,
-  20: 1
+  20: 1,
+  21: -1,
+  22: 1,
 }

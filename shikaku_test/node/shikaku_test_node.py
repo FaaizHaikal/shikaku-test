@@ -1,6 +1,7 @@
 import rclpy
 import tf2_ros
 from tachimawari_interfaces.msg import CurrentJoints
+from tachimawari_interfaces.msg import SetJoints
 from kansei_interfaces.msg import Status
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import TransformStamped
@@ -14,8 +15,8 @@ class ShikakuTestNode:
     self.tf_msg = None
 
     self.current_joints_subscription = self.node.create_subscription(
-      CurrentJoints, "joint/current_joints", 
-      lambda msg: [self.update(msg.joints)], 10)
+      SetJoints, "joint/set_joints", 
+      lambda msg: [self.update_joints(msg.joints)], 10)
     
     # self.kansei_status_subscription = self.node.create_subscription(
     #   Status, "measurement/status",
@@ -33,9 +34,10 @@ class ShikakuTestNode:
   
   def update_joints(self, joints):
     self.joints_msg = JointState()
+ 
     for joint in joints:
       self.joints_msg.name.append(joint_names[joint.id])
-      self.joints_msg.position.append(self.angle_to_radian(joint.angle) * joint_directions[joint.id])
+      self.joints_msg.position.append(self.angle_to_radian(joint.position) * joint_directions[joint.id])
     
     for joint in fixed_joints:
       self.joints_msg.name.append(joint)
@@ -60,5 +62,6 @@ class ShikakuTestNode:
     return
     
   def update(self):
-    self.joint_state_publisher.publish(self.joints_msg)
+    if (self.joints_msg):
+      self.joint_state_publisher.publish(self.joints_msg)
     # self.tf_broadcaster.sendTransform(self.tf_msg)
